@@ -35,6 +35,13 @@ final class IndexController extends AbstractActionController
             'meetup' => $this->meetupRepository->findAll(),
         ]);
     }
+    public function meetupAction()
+    {
+            return new ViewModel([
+                    $id = $this->params()->fromRoute( 'id' ),
+                    'meetup' => $this->meetupRepository->find($id),
+            ]);
+    }
 
     public function addAction()
     {
@@ -45,7 +52,7 @@ final class IndexController extends AbstractActionController
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $meet = $this->meetupRepository->createMeetupFromNameAndDescriptionAndDatestartAndDateend(
+                $meetup = $this->meetupRepository->createMeetupFromNameAndDescriptionAndDatestartAndDateend(
                     $form->getData()['title'],
                     $form->getData()['description'],
                     $form->getData()['dateStart'],
